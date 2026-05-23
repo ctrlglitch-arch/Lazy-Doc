@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#00FFAA" # A sleek tech-green
+backgroundColor = "#0F172A" # Dark professional background
+secondaryBackgroundColor = "#1E293B" # Slightly lighter container color
+textColor = "#F8FAFC" # Off-white text
+font = "sans serif"
