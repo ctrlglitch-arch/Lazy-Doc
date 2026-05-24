@@ -28,19 +28,32 @@ with col2:
     st.markdown("### 📤 Output Documentation")
     
     if generate_btn:
-        with st.spinner("Parsing syntax tree and calling Groq..."):
+        with st.spinner("Analyzing and generating..."):
             try:
-                # Dynamically parse the function name and arguments using AST
                 tree = ast.parse(raw_code)
                 func_def = next(node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef))
                 func_name = func_def.name
                 args = [arg.arg for arg in func_def.args.args]
                 
-                # Call your generator backend
-                documentation = generate_doc(func_name, args, raw_code)
+                # Logic for Complexity
+                nodes = [n for n in ast.walk(tree) if isinstance(n, (ast.If, ast.For, ast.While, ast.ExceptHandler))]
+                score = len(nodes)
+                complexity = "Low 🟢" if score < 3 else "Medium 🟡" if score < 7 else "High 🔴"
                 
-                st.success("Done!")
-                st.code(documentation, language="markdown")
+                documentation = generate_doc(func_name, args, raw_code)
+                st.session_state.doc = documentation
+                
+                # Show Metric and Result
+                st.metric("Code Complexity", complexity)
+                st.code(st.session_state.doc, language="markdown")
+                
+                # Add Download Button
+                st.download_button(
+                    label="📥 Download Documentation",
+                    data=st.session_state.doc,
+                    file_name="documentation.md",
+                    mime="text/markdown",
+                )
                 
             except StopIteration:
                 st.error("No function definition found. Make sure your code starts with 'def'")
