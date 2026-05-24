@@ -1,33 +1,52 @@
-LazyDoc 📝
-Let’s be honest: nobody actually likes writing documentation. It is the task that gets pushed to the end of the sprint, leading to code debt where nobody understands how the functions work six months later.
+# LazyDoc
 
-I built LazyDoc to stop that. It is a tool that takes your raw Python code and turns it into clean, readable documentation in seconds.
+Nobody likes writing documentation.
 
-The Approach
-Most tools just throw code at an AI and hope for the best. LazyDoc does it differently. I wanted the output to be accurate, not just pretty, so I built a pipeline:
+LazyDoc takes Python code and generates readable documentation automatically, so you don't have to spend time explaining every function manually.
 
-Static Analysis: The backend uses Python’s ast library to scan your code structure before anything else happens. It identifies exactly what your functions are doing and what arguments they take.
+## What it does
 
-Context-Aware Docs: By combining that structural data with your actual logic, the AI does not have to guess—it knows exactly what it is documenting.
+* Reads Python code using AST
+* Understands functions, classes, parameters, and structure
+* Uses Groq-powered AI to generate documentation
+* Shows code and generated docs side-by-side
 
-Speed: I am using the Groq API (Llama 3.3) because it is fast. If you are documenting code, you do not want to be waiting around.
+## Tech Stack
 
-No-Nonsense UI: The interface is built in Streamlit. It is split-screen: your code on the left, your docs on the right. You can even check your code complexity and download the output as a Markdown file.
+* Python
+* Streamlit
+* AST
+* Groq API
 
-How to run it
-Get the code:
-git clone 
-cd crystal
+## Run Locally
 
-Setup:
-You will need a Groq API key for this to work. Create a file named .env in the folder and put your key in there:
+```bash
+git clone <repo-url>
+cd LazyDoc
+```
+
+Create a `.env` file:
+
+```env
 GROQ_API_KEY=your_key_here
+```
 
-Install the requirements:
+Install requirements:
+
+```bash
 pip install -r requirements.txt
+```
 
-Start it up:
+Start the app:
+
+```bash
 python -m streamlit run app.py
+```
 
-Why this is useful
-Documentation is usually the unpaid debt of every engineering team. LazyDoc does not just summarize—it provides a consistent, professional spec so you can actually onboard new people without spending hours explaining your functions.
+## Why I Built It
+
+I got tired of seeing documentation become the "I'll do it later" task on projects.
+
+The code already contains most of the information needed to describe itself, so I built LazyDoc to turn that information into useful documentation automatically.
+
+It won't replace good technical writing, but it can save a lot of time getting started.
